@@ -1,9 +1,23 @@
 import speech_recognition as sr
+import publisher as mqtt
+
+mqtt_worker = mqtt.mqtt_handler()
 
 r = sr.Recognizer()
 m = sr.Microphone()
 
+def command_parse(command):
+    if command.startswith("daniel"):
+        print ("got a valid command")
+        if ("turn" in command) or ("switch" in command):
+            print ("got a switch command")
+            if ("on" in command):
+                print ("i got a switch on command")
+            elif "off" in command:
+                print ("i got a switch off command")
 try:
+    print("connect to mqtt_broker")
+    mqtt.mq_conn()
     print("A moment of silence, please...")
     with m as source: r.adjust_for_ambient_noise(source)
     print("Set minimum energy threshold to {}".format(r.energy_threshold))
@@ -20,6 +34,7 @@ try:
             else:  # this version of Python uses unicode for strings (Python 3+)
                 command=value
             print(command)
+            command_parse(command.lower())
         except sr.UnknownValueError:
             print("Oops! Didn't catch that")
         except sr.RequestError as e:
