@@ -17,7 +17,7 @@ def command_parse(command):
                 print ("i got a switch off command")
 try:
     print("connect to mqtt_broker")
-    mqtt.mq_conn()
+    mqtt_worker.mq_publish("test", "test_message")
     print("A moment of silence, please...")
     with m as source: r.adjust_for_ambient_noise(source)
     print("Set minimum energy threshold to {}".format(r.energy_threshold))
