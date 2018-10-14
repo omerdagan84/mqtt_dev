@@ -13,8 +13,10 @@ def command_parse(command):
             print ("got a switch command")
             if ("on" in command):
                 print ("i got a switch on command")
+                mqtt_worker.mq_publish("test", "LED on")
             elif "off" in command:
                 print ("i got a switch off command")
+                mqtt_worker.mq_publish("test", "LED off")
 try:
     print("connect to mqtt_broker")
     mqtt_worker.mq_publish("test", "test_message")
